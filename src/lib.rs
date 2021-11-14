@@ -1,5 +1,6 @@
+use pyo3::prelude::*;
 
-
+#[pyfunction]
 fn levensthein(str1: String, str2: String) -> usize{
     let mut first_min: usize;
     let mut second_min: usize;
@@ -31,16 +32,17 @@ fn levensthein(str1: String, str2: String) -> usize{
         }
         
     }
-    println!("{0}", v[str1_len - 1][str2_len - 1]);
     return v[str1_len - 1][str2_len - 1];
 }
 
+/// A Python module implemented in Rust. The name of this function must match
+/// the `lib.name` setting in the `Cargo.toml`, else Python will not be able to
+/// import the module.
+#[pymodule]
+fn fastlevensthein(_py: Python, m: &PyModule) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(levensthein, m)?)?;
 
-fn main() {
-    println!("Hello, world!");
-    let res : usize;
-    res = levensthein(String::from("akitten"), String::from("asitting"));
-    println!("{0}", res);
+    Ok(())
 }
 
 #[cfg(test)]
