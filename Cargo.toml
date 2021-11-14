@@ -1,11 +1,13 @@
 [package]
 authors = ["ThibaultB"]
 name = "fastlevensthein"
-version = "0.1.2"
+version = "0.1.3"
 description = "A Rust-based levensthein distance implementation."
 edition = "2021"
 documentation = "https://github.com/thibaultbl/fastlevenshtein"
 readme = "README.rst"
+homepage = "https://github.com/thibaultbl/fastlevenshtein"
+repository = "https://github.com/thibaultbl/fastlevenshtein"
 
 [lib]
 name = "fastlevensthein"
