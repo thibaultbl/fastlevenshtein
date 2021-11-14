@@ -1,7 +1,11 @@
 [package]
+authors = ["ThibaultB"]
 name = "fastlevensthein"
-version = "0.1.0"
+version = "0.1.2"
+description = "A Rust-based levensthein distance implementation."
 edition = "2021"
+documentation = "https://github.com/thibaultbl/fastlevenshtein"
+readme = "README.rst"
 
 [lib]
 name = "fastlevensthein"
@@ -18,3 +22,13 @@ version = "0.15.0"
 features = ["extension-module"]
 
 [dependencies]
+
+[package.metadata.maturin]
+classifier=[
+    "License :: OSI Approved :: GNU General Public License (GPL) ",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Rust",
+    "Operating System :: POSIX :: Linux",
+]
