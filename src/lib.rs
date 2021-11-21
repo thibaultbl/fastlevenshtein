@@ -34,12 +34,26 @@ fn levensthein(str1: String, str2: String) -> usize{
     return v[str1_len - 1][str2_len - 1];
 }
 
+#[pyfunction]
+fn levensthein_list(slice: Vec<&str>, str2: &str) -> Vec<usize>{
+    let mut res = Vec::new();
+
+    for i in 0..slice.len(){
+        println!("{0}", String::from(slice[i]));
+        //println!("{0}", &str2);
+        
+        res.push(levensthein(String::from(slice[i]), String::from(str2)));
+    }
+    return res;
+}
+
 /// A Python module implemented in Rust. The name of this function must match
 /// the `lib.name` setting in the `Cargo.toml`, else Python will not be able to
 /// import the module.
 #[pymodule]
-fn fastlevensthein(_py: Python, m: &PyModule) -> PyResult<()> {
+fn fastlevenshtein(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(levensthein, m)?)?;
+    m.add_function(wrap_pyfunction!(levensthein_list, m)?)?;
 
     Ok(())
 }
@@ -58,6 +72,16 @@ mod tests {
         assert_eq!(1, levensthein(String::from("test"), String::from("tests")));
         assert_eq!(5, levensthein(String::from("chiens"), String::from("niche")));
         assert_eq!(5, levensthein(String::from("niche"), String::from("chiens")));
+    }
+
+    #[test]
+    fn test_levensthein_list() {
+        let mylist = vec!["kitten", "sitting", "akitten"];
+        let mystring = "kitten";
+
+        let expected = vec![0 as usize, 3 as usize, 1 as usize];
+
+        assert_eq!(expected, levensthein_list(mylist, mystring));
     }
 }
 
