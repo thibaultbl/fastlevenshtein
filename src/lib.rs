@@ -19,7 +19,6 @@ fn levensthein(str1: String, str2: String) -> usize{
 
 
     for _i in 1..str1_len{
-        // v[_i] = vec![0; str2.len()];
         for _j in 1..str2_len{
             if str1.chars().nth(_i - 1) == str2.chars().nth(_j - 1) {
                 v[_i][_j] = v[_i-1][_j-1];

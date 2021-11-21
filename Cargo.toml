@@ -1,8 +1,8 @@
 [package]
 authors = ["ThibaultB"]
-name = "fastlevensthein"
+name = "fastlevenshtein"
 version = "0.1.4"
-description = "A Rust-based levensthein distance implementation."
+description = "A Rust-based levenshtein distance implementation."
 edition = "2021"
 documentation = "https://github.com/thibaultbl/fastlevenshtein"
 readme = "README.rst"
@@ -10,7 +10,7 @@ homepage = "https://github.com/thibaultbl/fastlevenshtein"
 repository = "https://github.com/thibaultbl/fastlevenshtein"
 
 [lib]
-name = "fastlevensthein"
+name = "fastlevenshtein"
 # "cdylib" is necessary to produce a shared library for Python to import from.
 #
 # Downstream Rust code (including code in `bin/`, `examples/`, and `tests/`) will not be able
