@@ -38,10 +38,7 @@ fn levensthein(str1: String, str2: String) -> usize{
 fn levensthein_list(slice: Vec<&str>, str2: &str) -> Vec<usize>{
     let mut res = Vec::new();
 
-    for i in 0..slice.len(){
-        println!("{0}", String::from(slice[i]));
-        //println!("{0}", &str2);
-        
+    for i in 0..slice.len(){       
         res.push(levensthein(String::from(slice[i]), String::from(str2)));
     }
     return res;
