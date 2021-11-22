@@ -21,7 +21,6 @@ Usage
    levensthein("string1", "string2")
    >>> 1
 
-:: 
    from fastlevensthein import levensthein_list
    levensthein_list(["string1", string2], "string3")
    >>> [1, 1]
