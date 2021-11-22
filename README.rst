@@ -22,7 +22,7 @@ Usage
    >>> 1
 
    from fastlevensthein import levensthein_list
-   levensthein_list(["string1", string2], "string3")
+   levensthein_list(["string1", "string2"], "string3")
    >>> [1, 1]
 
 
