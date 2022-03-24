@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 
 #[pyfunction]
-fn levensthein(str1: String, str2: String) -> usize{
+fn levensthein(str1: String, str2: String, exit_after: usize) -> usize{
     let mut first_min: usize;
     let mut second_min: usize;
 
@@ -28,6 +28,9 @@ fn levensthein(str1: String, str2: String) -> usize{
                 second_min = v[_i - 1][_j - 1];
                 v[_i][_j] = 1 + *[first_min, second_min].iter().min().unwrap();
             }
+            if v[_i][_j] >= exit_after {
+                return v[_i][_j]
+            }
         }
         
     }
@@ -35,14 +38,14 @@ fn levensthein(str1: String, str2: String) -> usize{
 }
 
 #[pyfunction]
-fn levensthein_list(slice: Vec<&str>, str2: &str) -> Vec<usize>{
+fn levensthein_list(slice: Vec<&str>, str2: &str, exit_after: usize) -> Vec<usize>{
     let mut res = Vec::new();
 
     for i in 0..slice.len(){
         println!("{0}", String::from(slice[i]));
         //println!("{0}", &str2);
         
-        res.push(levensthein(String::from(slice[i]), String::from(str2)));
+        res.push(levensthein(String::from(slice[i]), String::from(str2), exit_after));
     }
     return res;
 }
@@ -64,14 +67,16 @@ mod tests {
 
     #[test]
     fn test_levensthein() {
-        assert_eq!(3 as usize, levensthein(String::from("kitten"), String::from("sitting")));
-        assert_eq!(3 as usize, levensthein(String::from("akitten"), String::from("asitting")));
-        assert_eq!(0, levensthein(String::from("examen"), String::from("examen")));
-        assert_eq!(1, levensthein(String::from("examen"), String::from("examan")));
-        assert_eq!(4, levensthein(String::from("niche"), String::from("chien")));
-        assert_eq!(1, levensthein(String::from("test"), String::from("tests")));
-        assert_eq!(5, levensthein(String::from("chiens"), String::from("niche")));
-        assert_eq!(5, levensthein(String::from("niche"), String::from("chiens")));
+        assert_eq!(3 as usize, levensthein(String::from("kitten"), String::from("sitting"), 999));
+        assert_eq!(3 as usize, levensthein(String::from("akitten"), String::from("asitting"), 999));
+        assert_eq!(0, levensthein(String::from("examen"), String::from("examen"), 999));
+        assert_eq!(1, levensthein(String::from("examen"), String::from("examan"), 999));
+        assert_eq!(4, levensthein(String::from("niche"), String::from("chien"), 999));
+        assert_eq!(1, levensthein(String::from("test"), String::from("tests"), 999));
+        assert_eq!(5, levensthein(String::from("chiens"), String::from("niche"), 999));
+        assert_eq!(5, levensthein(String::from("niche"), String::from("chiens"), 999));
+        assert_eq!(3, levensthein(String::from("aaaaaa"), String::from("bbbbbbbbb"), 3));
+        assert_eq!(6, levensthein(String::from("aabaaaaaa"), String::from("bbbbbbbbb"), 6));
     }
 
     #[test]
@@ -81,7 +86,7 @@ mod tests {
 
         let expected = vec![0 as usize, 3 as usize, 1 as usize];
 
-        assert_eq!(expected, levensthein_list(mylist, mystring));
+        assert_eq!(expected, levensthein_list(mylist, mystring, 999));
     }
 }
 
