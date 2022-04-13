@@ -42,9 +42,6 @@ fn levenshtein_list(slice: Vec<&str>, str2: &str, exit_after: usize) -> Vec<usiz
     let mut res = Vec::new();
 
     for i in 0..slice.len(){
-        println!("{0}", String::from(slice[i]));
-        //println!("{0}", &str2);
-        
         res.push(levenshtein(String::from(slice[i]), String::from(str2), exit_after));
     }
     return res;
