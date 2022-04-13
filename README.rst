@@ -2,7 +2,7 @@
 
 Introduction
 ------------
-Rust implementation of levenshtein distance (https://en.wikipedia.org/wiki/Levenshtein_distance).
+Rust implementation of levenshtein distance (https://en.wikipedia.org/wiki/Levenshtein_distance), based on Wagner–Fischer_algorithm (https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm).
 
 Installation
 ------------

@@ -4,6 +4,7 @@ use pyo3::prelude::*;
 fn levenshtein(str1: String, str2: String, exit_after: usize) -> usize{
     let mut first_min: usize;
     let mut second_min: usize;
+    let mut min_value: usize;
 
     let str1_len = str1.len() + 1;
     let str2_len = str2.len() + 1;
@@ -28,9 +29,11 @@ fn levenshtein(str1: String, str2: String, exit_after: usize) -> usize{
                 second_min = v[_i - 1][_j - 1];
                 v[_i][_j] = 1 + *[first_min, second_min].iter().min().unwrap();
             }
-            if v[_i][_j] >= exit_after {
-                return v[_i][_j]
+            min_value = *v[_i].iter().min().unwrap();
+            if min_value >= exit_after {
+                return exit_after
             }
+            // println!("{}", v[_i][_j])
         }
         
     }
@@ -63,6 +66,17 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_levenshtein_early_stop() {
+        assert_eq!(0, levenshtein(String::from("_setup.dll"), String::from("_setup.dll"), 3));
+        assert_eq!(1, levenshtein(String::from("_setup1.dll"), String::from("_setup.dll"), 3));
+        assert_eq!(2, levenshtein(String::from("_setupab.dll"), String::from("_setup.dll"), 3));
+        assert_eq!(3, levenshtein(String::from("ab_setup1.dll"), String::from("_setup.dll"), 4));
+        assert_eq!(3, levenshtein(String::from("ab_setup1.dll"), String::from("_setup.dll"), 3));
+        assert_eq!(3, levenshtein(String::from("ab_setup.dllc"), String::from("_setup.dll"), 3));
+        assert_eq!(3, levenshtein(String::from("ab_setup.dllcd"), String::from("_setup.dll"), 3));
+    }
+
+    #[test]
     fn test_levenshtein() {
         assert_eq!(3 as usize, levenshtein(String::from("kitten"), String::from("sitting"), 999));
         assert_eq!(3 as usize, levenshtein(String::from("akitten"), String::from("asitting"), 999));
@@ -74,6 +88,7 @@ mod tests {
         assert_eq!(5, levenshtein(String::from("niche"), String::from("chiens"), 999));
         assert_eq!(3, levenshtein(String::from("aaaaaa"), String::from("bbbbbbbbb"), 3));
         assert_eq!(6, levenshtein(String::from("aabaaaaaa"), String::from("bbbbbbbbb"), 6));
+        assert_eq!(0, levenshtein(String::from("_setup.dll"), String::from("_setup.dll"), 3));
     }
 
     #[test]
@@ -84,6 +99,12 @@ mod tests {
         let expected = vec![0 as usize, 3 as usize, 1 as usize];
 
         assert_eq!(expected, levenshtein_list(mylist, mystring, 999));
+
+        let mylist = vec!["_setup.dll", "_setup.dll1"];
+        let mystring = "_setup.dll";
+        let expected = vec![0 as usize, 1 as usize];
+
+        assert_eq!(expected, levenshtein_list(mylist, mystring, 3));
     }
 }
 
