@@ -2,14 +2,14 @@
 
 Introduction
 ------------
-Rust implementation of levensthein distance (https://en.wikipedia.org/wiki/Levenshtein_distance).
+Rust implementation of levenshtein distance (https://en.wikipedia.org/wiki/Levenshtein_distance).
 
 Installation
 ------------
 
 ::
 
-   pip install fastlevensthein
+   pip install fastlevenshtein
 
 
 Usage
@@ -26,16 +26,16 @@ If you do not want to use early exit, you can just use a really high value for t
 
 ::
 
-   from fastlevensthein import levensthein
-   levensthein("string1", "string2", 999) # 999 so no early exit
+   from fastlevenshtein import levenshtein
+   levenshtein("string1", "string2", 999) # 999 so no early exit
    >>> 1
 
-   from fastlevensthein import levensthein_list
-   levensthein_list(["string1", "string2"], "string3", 999)
+   from fastlevenshtein import levenshtein_list
+   levenshtein_list(["string1", "string2"], "string3", 999)
    >>> [1, 1]
 
-   from fastlevensthein import levensthein_list
-   levensthein_list(["aaaaaaaa", "bbbbbbbb"], "ccccccc", 3) # early exit at 3 maximum value for levensthein distance
+   from fastlevenshtein import levenshtein_list
+   levenshtein_list(["aaaaaaaa", "bbbbbbbb"], "ccccccc", 3) # early exit at 3 maximum value for levensthein distance
    >>> [3, 3]
 
 

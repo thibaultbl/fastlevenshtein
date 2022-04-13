@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 
 #[pyfunction]
-fn levensthein(str1: String, str2: String, exit_after: usize) -> usize{
+fn levenshtein(str1: String, str2: String, exit_after: usize) -> usize{
     let mut first_min: usize;
     let mut second_min: usize;
 
@@ -38,14 +38,14 @@ fn levensthein(str1: String, str2: String, exit_after: usize) -> usize{
 }
 
 #[pyfunction]
-fn levensthein_list(slice: Vec<&str>, str2: &str, exit_after: usize) -> Vec<usize>{
+fn levenshtein_list(slice: Vec<&str>, str2: &str, exit_after: usize) -> Vec<usize>{
     let mut res = Vec::new();
 
     for i in 0..slice.len(){
         println!("{0}", String::from(slice[i]));
         //println!("{0}", &str2);
         
-        res.push(levensthein(String::from(slice[i]), String::from(str2), exit_after));
+        res.push(levenshtein(String::from(slice[i]), String::from(str2), exit_after));
     }
     return res;
 }
@@ -55,8 +55,8 @@ fn levensthein_list(slice: Vec<&str>, str2: &str, exit_after: usize) -> Vec<usiz
 /// import the module.
 #[pymodule]
 fn fastlevenshtein(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(levensthein, m)?)?;
-    m.add_function(wrap_pyfunction!(levensthein_list, m)?)?;
+    m.add_function(wrap_pyfunction!(levenshtein, m)?)?;
+    m.add_function(wrap_pyfunction!(levenshtein_list, m)?)?;
 
     Ok(())
 }
@@ -66,27 +66,27 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_levensthein() {
-        assert_eq!(3 as usize, levensthein(String::from("kitten"), String::from("sitting"), 999));
-        assert_eq!(3 as usize, levensthein(String::from("akitten"), String::from("asitting"), 999));
-        assert_eq!(0, levensthein(String::from("examen"), String::from("examen"), 999));
-        assert_eq!(1, levensthein(String::from("examen"), String::from("examan"), 999));
-        assert_eq!(4, levensthein(String::from("niche"), String::from("chien"), 999));
-        assert_eq!(1, levensthein(String::from("test"), String::from("tests"), 999));
-        assert_eq!(5, levensthein(String::from("chiens"), String::from("niche"), 999));
-        assert_eq!(5, levensthein(String::from("niche"), String::from("chiens"), 999));
-        assert_eq!(3, levensthein(String::from("aaaaaa"), String::from("bbbbbbbbb"), 3));
-        assert_eq!(6, levensthein(String::from("aabaaaaaa"), String::from("bbbbbbbbb"), 6));
+    fn test_levenshtein() {
+        assert_eq!(3 as usize, levenshtein(String::from("kitten"), String::from("sitting"), 999));
+        assert_eq!(3 as usize, levenshtein(String::from("akitten"), String::from("asitting"), 999));
+        assert_eq!(0, levenshtein(String::from("examen"), String::from("examen"), 999));
+        assert_eq!(1, levenshtein(String::from("examen"), String::from("examan"), 999));
+        assert_eq!(4, levenshtein(String::from("niche"), String::from("chien"), 999));
+        assert_eq!(1, levenshtein(String::from("test"), String::from("tests"), 999));
+        assert_eq!(5, levenshtein(String::from("chiens"), String::from("niche"), 999));
+        assert_eq!(5, levenshtein(String::from("niche"), String::from("chiens"), 999));
+        assert_eq!(3, levenshtein(String::from("aaaaaa"), String::from("bbbbbbbbb"), 3));
+        assert_eq!(6, levenshtein(String::from("aabaaaaaa"), String::from("bbbbbbbbb"), 6));
     }
 
     #[test]
-    fn test_levensthein_list() {
+    fn test_levenshtein_list() {
         let mylist = vec!["kitten", "sitting", "akitten"];
         let mystring = "kitten";
 
         let expected = vec![0 as usize, 3 as usize, 1 as usize];
 
-        assert_eq!(expected, levensthein_list(mylist, mystring, 999));
+        assert_eq!(expected, levenshtein_list(mylist, mystring, 999));
     }
 }
 
